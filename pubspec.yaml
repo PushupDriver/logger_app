@@ -59,6 +59,15 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
+  fonts:
+    - family: Rajdhiani
+      fonts:
+        - asset: fonts/Rajdhani-Bold.ttf
+        - asset: fonts/Rajdhani-Light.ttf
+        - asset: fonts/Rajdhani-Medium.ttf
+        - asset: fonts/Rajdhani-Regular.ttf
+        - asset: fonts/Rajdhani-SemiBold.ttf
+
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg
