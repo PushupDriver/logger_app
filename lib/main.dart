@@ -1,7 +1,5 @@
+import 'package:exercise_counter/event_logger.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter/services.dart';
-
-import 'app.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,7 +21,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData.dark(),
-      home: const ExerciseCounter(),
+      home: const EventLogger(),
     );
   }
 }
