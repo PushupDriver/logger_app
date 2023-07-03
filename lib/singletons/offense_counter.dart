@@ -1,3 +1,5 @@
+const int compensationThreashold = 100;
+
 class OffenseCounter {
   int wrongWayOffenseCount = 0;
   int headlightUsageOffenseCount = 0;
@@ -19,5 +21,27 @@ class OffenseCounter {
     } else if (_carDamage < 0) {
       _carDamage = 0;
     }
+  }
+
+  int get sum => (wrongWayOffenseCount +
+      headlightUsageOffenseCount +
+      notRestingOffenseCount +
+      redLightOffenseCount +
+      collidingWithCarCount +
+      speedingCount +
+      failedToStopAtWeightStationCount +
+      illegalTrailerCount +
+      damagedVehicleCount +
+      carDamage);
+
+  int get compensation {
+    if (sum < compensationThreashold) {
+      return compensationThreashold;
+    }
+    return 0;
+  }
+
+  int sumPushup(int perOffensePushup) {
+    return sum * perOffensePushup + compensation;
   }
 }

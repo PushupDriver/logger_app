@@ -1,3 +1,4 @@
+import 'package:exercise_counter/screens/pushup.dart';
 import 'package:exercise_counter/singletons/offense_counter.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -12,9 +13,12 @@ class OffenseSum extends StatefulWidget {
 class _OffenseSumState extends State<OffenseSum> {
   late OffenseCounter offenseCounter;
 
+  final int perOffencePushup = 10;
+
   @override
   void initState() {
     super.initState();
+
     final getit = GetIt.instance;
     offenseCounter = getit.get<OffenseCounter>();
   }
@@ -29,78 +33,93 @@ class _OffenseSumState extends State<OffenseSum> {
           children: [
             ListTile(
               title: const Text("Wrong way offense"),
-              trailing: Text(offenseCounter.wrongWayOffenseCount.toString()),
+              trailing: Text(
+                  "${offenseCounter.wrongWayOffenseCount} x $perOffencePushup"),
             ),
             const Divider(),
             ListTile(
               title: const Text("Headlight usage offense"),
-              trailing:
-                  Text(offenseCounter.headlightUsageOffenseCount.toString()),
+              trailing: Text(
+                  "${offenseCounter.headlightUsageOffenseCount} x $perOffencePushup"),
             ),
             const Divider(),
             ListTile(
               title: const Text("Not resting offense"),
-              trailing: Text(offenseCounter.notRestingOffenseCount.toString()),
+              trailing: Text(
+                  "${offenseCounter.notRestingOffenseCount} x $perOffencePushup"),
             ),
             const Divider(),
             ListTile(
               title: const Text("Red light offense"),
-              trailing: Text(offenseCounter.redLightOffenseCount.toString()),
+              trailing: Text(
+                  "${offenseCounter.redLightOffenseCount} x $perOffencePushup"),
             ),
             const Divider(),
             ListTile(
               title: const Text("Colliding with car offense"),
-              trailing: Text(offenseCounter.collidingWithCarCount.toString()),
+              trailing: Text(
+                  "${offenseCounter.collidingWithCarCount} x $perOffencePushup"),
             ),
             const Divider(),
             ListTile(
               title: const Text("Speeding offense"),
-              trailing: Text(offenseCounter.speedingCount.toString()),
+              trailing:
+                  Text("${offenseCounter.speedingCount} x $perOffencePushup"),
             ),
             const Divider(),
             ListTile(
               title: const Text("Failed to stop at weight station offense"),
               trailing: Text(
-                  offenseCounter.failedToStopAtWeightStationCount.toString()),
+                  "${offenseCounter.failedToStopAtWeightStationCount} x $perOffencePushup"),
             ),
             const Divider(),
             ListTile(
               title: const Text("Illegal trailer offense"),
-              trailing: Text(offenseCounter.illegalTrailerCount.toString()),
+              trailing: Text(
+                  "${offenseCounter.illegalTrailerCount} x $perOffencePushup"),
             ),
             const Divider(),
             ListTile(
               title: const Text("Damaged vehicle offense"),
-              trailing: Text(offenseCounter.damagedVehicleCount.toString()),
+              trailing: Text(
+                  "${offenseCounter.damagedVehicleCount} x $perOffencePushup"),
             ),
             const Divider(),
             ListTile(
               title: const Text("Car damage"),
-              trailing: Text("${offenseCounter.carDamage}%"),
+              trailing: Text(
+                  "${offenseCounter.carDamage}% x 100 x $perOffencePushup"),
+            ),
+            const Divider(),
+            ListTile(
+              title:
+                  const Text("Lower than $compensationThreashold compensation"),
+              trailing: Text(offenseCounter.compensation.toString()),
+            ),
+            const Divider(),
+            ListTile(
+              title: const Text(
+                "Sum",
+                style: TextStyle(fontSize: 30),
+              ),
+              trailing: Text(
+                offenseCounter.sumPushup(perOffencePushup).toString(),
+                style: const TextStyle(fontSize: 30),
+              ),
             ),
             const Divider(),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: MaterialButton(
                 color: Colors.blue,
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => const PushUp()));
+                },
                 child: const Text("Next"),
               ),
             )
           ],
-        )
-        // RawKeyboardListener(
-        //   autofocus: true,
-        //   focusNode: FocusNode(),
-        //   onKey: (value) {
-        //     setState(() {
-        //       disp = value.logicalKey.debugName.toString();
-        //     });
-        //   },
-        //   child: Center(
-        //     child: Text(disp),
-        //   ),
-        // ),
-        );
+        ));
   }
 }
