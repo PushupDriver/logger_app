@@ -13,8 +13,6 @@ class OffenseSum extends StatefulWidget {
 class _OffenseSumState extends State<OffenseSum> {
   late OffenseCounter offenseCounter;
 
-  final int perOffencePushup = 10;
-
   @override
   void initState() {
     super.initState();
@@ -103,7 +101,7 @@ class _OffenseSumState extends State<OffenseSum> {
                 style: TextStyle(fontSize: 30),
               ),
               trailing: Text(
-                offenseCounter.sumPushup(perOffencePushup).toString(),
+                offenseCounter.sumPushup().toString(),
                 style: const TextStyle(fontSize: 30),
               ),
             ),

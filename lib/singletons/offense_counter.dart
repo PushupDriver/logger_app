@@ -1,4 +1,5 @@
 const int compensationThreashold = 100;
+const int perOffencePushup = 10;
 
 class OffenseCounter {
   int wrongWayOffenseCount = 0;
@@ -41,7 +42,7 @@ class OffenseCounter {
     return 0;
   }
 
-  int sumPushup(int perOffensePushup) {
-    return sum * perOffensePushup + compensation;
+  int sumPushup() {
+    return sum * perOffencePushup + compensation;
   }
 }
