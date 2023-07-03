@@ -24,7 +24,7 @@ class OffenseCounter {
     }
   }
 
-  int get sum => (wrongWayOffenseCount +
+  int get preCompensateCountSum => (wrongWayOffenseCount +
       headlightUsageOffenseCount +
       notRestingOffenseCount +
       redLightOffenseCount +
@@ -36,13 +36,13 @@ class OffenseCounter {
       carDamage);
 
   int get compensation {
-    if (sum < compensationThreashold) {
+    if (preCompensateCountSum * perOffencePushup < compensationThreashold) {
       return compensationThreashold;
     }
     return 0;
   }
 
   int sumPushup() {
-    return sum * perOffencePushup + compensation;
+    return preCompensateCountSum * perOffencePushup + compensation;
   }
 }
