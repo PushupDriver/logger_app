@@ -240,7 +240,6 @@ class _OffenseLoggerState extends State<OffenseLogger> {
                     },
                     text: "Weight Stop Failed",
                     icon: Icons.scale,
-                    // color: Colors.indigo,
                     color: Colors.cyan,
                   ),
                 ),

@@ -24,100 +24,101 @@ class _OffenseSumState extends State<OffenseSum> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("Offense Sum"),
-        ),
-        body: ListView(
-          children: [
-            ListTile(
-              title: const Text("Wrong way offense"),
-              trailing: Text(
-                  "${offenseCounter.wrongWayOffenseCount} x $perOffencePushup"),
+      appBar: AppBar(
+        title: const Text("Offense Sum"),
+      ),
+      body: ListView(
+        children: [
+          ListTile(
+            title: const Text("Wrong way offense"),
+            trailing: Text(
+                "${offenseCounter.wrongWayOffenseCount} x $perOffencePushup"),
+          ),
+          const Divider(),
+          ListTile(
+            title: const Text("Headlight usage offense"),
+            trailing: Text(
+                "${offenseCounter.headlightUsageOffenseCount} x $perOffencePushup"),
+          ),
+          const Divider(),
+          ListTile(
+            title: const Text("Not resting offense"),
+            trailing: Text(
+                "${offenseCounter.notRestingOffenseCount} x $perOffencePushup"),
+          ),
+          const Divider(),
+          ListTile(
+            title: const Text("Red light offense"),
+            trailing: Text(
+                "${offenseCounter.redLightOffenseCount} x $perOffencePushup"),
+          ),
+          const Divider(),
+          ListTile(
+            title: const Text("Colliding with car offense"),
+            trailing: Text(
+                "${offenseCounter.collidingWithCarCount} x $perOffencePushup"),
+          ),
+          const Divider(),
+          ListTile(
+            title: const Text("Speeding offense"),
+            trailing:
+                Text("${offenseCounter.speedingCount} x $perOffencePushup"),
+          ),
+          const Divider(),
+          ListTile(
+            title: const Text("Failed to stop at weight station offense"),
+            trailing: Text(
+                "${offenseCounter.failedToStopAtWeightStationCount} x $perOffencePushup"),
+          ),
+          const Divider(),
+          ListTile(
+            title: const Text("Illegal trailer offense"),
+            trailing: Text(
+                "${offenseCounter.illegalTrailerCount} x $perOffencePushup"),
+          ),
+          const Divider(),
+          ListTile(
+            title: const Text("Damaged vehicle offense"),
+            trailing: Text(
+                "${offenseCounter.damagedVehicleCount} x $perOffencePushup"),
+          ),
+          const Divider(),
+          ListTile(
+            title: const Text("Car damage"),
+            trailing:
+                Text("${offenseCounter.carDamage}% x 100 x $perOffencePushup"),
+          ),
+          const Divider(),
+          ListTile(
+            title:
+                const Text("Lower than $compensationThreashold compensation"),
+            trailing: Text(offenseCounter.compensation.toString()),
+          ),
+          const Divider(),
+          ListTile(
+            title: const Text(
+              "Sum",
+              style: TextStyle(fontSize: 30),
             ),
-            const Divider(),
-            ListTile(
-              title: const Text("Headlight usage offense"),
-              trailing: Text(
-                  "${offenseCounter.headlightUsageOffenseCount} x $perOffencePushup"),
+            trailing: Text(
+              offenseCounter.sumPushup().toString(),
+              style: const TextStyle(fontSize: 30),
             ),
-            const Divider(),
-            ListTile(
-              title: const Text("Not resting offense"),
-              trailing: Text(
-                  "${offenseCounter.notRestingOffenseCount} x $perOffencePushup"),
+          ),
+          const Divider(),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: MaterialButton(
+              color: Colors.blue,
+              onPressed: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => const PushUp()));
+              },
+              child: const Text("Next"),
             ),
-            const Divider(),
-            ListTile(
-              title: const Text("Red light offense"),
-              trailing: Text(
-                  "${offenseCounter.redLightOffenseCount} x $perOffencePushup"),
-            ),
-            const Divider(),
-            ListTile(
-              title: const Text("Colliding with car offense"),
-              trailing: Text(
-                  "${offenseCounter.collidingWithCarCount} x $perOffencePushup"),
-            ),
-            const Divider(),
-            ListTile(
-              title: const Text("Speeding offense"),
-              trailing:
-                  Text("${offenseCounter.speedingCount} x $perOffencePushup"),
-            ),
-            const Divider(),
-            ListTile(
-              title: const Text("Failed to stop at weight station offense"),
-              trailing: Text(
-                  "${offenseCounter.failedToStopAtWeightStationCount} x $perOffencePushup"),
-            ),
-            const Divider(),
-            ListTile(
-              title: const Text("Illegal trailer offense"),
-              trailing: Text(
-                  "${offenseCounter.illegalTrailerCount} x $perOffencePushup"),
-            ),
-            const Divider(),
-            ListTile(
-              title: const Text("Damaged vehicle offense"),
-              trailing: Text(
-                  "${offenseCounter.damagedVehicleCount} x $perOffencePushup"),
-            ),
-            const Divider(),
-            ListTile(
-              title: const Text("Car damage"),
-              trailing: Text(
-                  "${offenseCounter.carDamage}% x 100 x $perOffencePushup"),
-            ),
-            const Divider(),
-            ListTile(
-              title:
-                  const Text("Lower than $compensationThreashold compensation"),
-              trailing: Text(offenseCounter.compensation.toString()),
-            ),
-            const Divider(),
-            ListTile(
-              title: const Text(
-                "Sum",
-                style: TextStyle(fontSize: 30),
-              ),
-              trailing: Text(
-                offenseCounter.sumPushup().toString(),
-                style: const TextStyle(fontSize: 30),
-              ),
-            ),
-            const Divider(),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: MaterialButton(
-                color: Colors.blue,
-                onPressed: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => const PushUp()));
-                },
-                child: const Text("Next"),
-              ),
-            )
-          ],
-        ));
+          )
+        ],
+      ),
+    );
   }
 }
