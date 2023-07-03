@@ -1,4 +1,4 @@
-import 'package:exercise_counter/event_logger.dart';
+import 'package:exercise_counter/screens/offense_logger.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData.dark(),
-      home: const EventLogger(),
+      home: const OffenseLogger(),
     );
   }
 }
