@@ -14,3 +14,10 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+## sound effect used
+
+| File     | Link |
+| ----------- | ----------- |
+| assets/sound_effects/pushup.opus      | https://www.youtube.com/watch?v=wcCC7qRgmis       |
+| assets/sound_effects/done.opus   | https://www.youtube.com/watch?v=7Oqt7z9ezP4        |

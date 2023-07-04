@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:confetti/confetti.dart';
 import 'package:exercise_counter/singletons/offense_counter.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,8 @@ class _PushUpState extends State<PushUp> {
     if (_toPushUp == 0) {
       // Done!!
       confettiController.play();
+      donePlayer.seek(Duration.zero);
+      donePlayer.resume();
       Future.delayed(const Duration(seconds: 10))
           .then((value) => confettiController.stop());
     } else if (_toPushUp < 0) {
@@ -35,6 +38,9 @@ class _PushUpState extends State<PushUp> {
 
   late ConfettiController confettiController;
 
+  final pushupPlayer = AudioPlayer();
+  final donePlayer = AudioPlayer();
+
   @override
   void initState() {
     super.initState();
@@ -47,6 +53,11 @@ class _PushUpState extends State<PushUp> {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
     confettiController =
         ConfettiController(duration: const Duration(seconds: 10));
+
+    pushupPlayer.setVolume(1);
+    donePlayer.setVolume(1);
+    pushupPlayer.setSource(AssetSource('sound_effects/pushup.opus'));
+    donePlayer.setSource(AssetSource('sound_effects/done.opus'));
   }
 
   @override
@@ -104,6 +115,8 @@ class _PushUpState extends State<PushUp> {
                 toPushUp = toPushUp - 1;
               });
               focusNode.requestFocus();
+              pushupPlayer.seek(Duration.zero);
+              pushupPlayer.resume();
             }
             lassPressDuration = event.timeStamp;
           }
