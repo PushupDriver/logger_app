@@ -21,7 +21,7 @@ class OffenseButton extends StatelessWidget {
       color: color,
       onPressed: onPressed,
       child: Container(
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.all(6),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

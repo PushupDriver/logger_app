@@ -128,7 +128,7 @@ class _PushUpState extends State<PushUp> {
                 toPushUp.toString(),
                 style: const TextStyle(
                   fontFamily: 'Rajdhiani',
-                  fontSize: 400,
+                  fontSize: 350,
                 ),
               ),
             ),

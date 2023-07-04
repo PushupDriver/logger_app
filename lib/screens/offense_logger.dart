@@ -2,7 +2,9 @@ import 'package:exercise_counter/components/offense_button.dart';
 import 'package:exercise_counter/screens/offense_sum.dart';
 import 'package:exercise_counter/singletons/offense_counter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
+import 'package:wakelock/wakelock.dart';
 
 class OffenseLogger extends StatefulWidget {
   const OffenseLogger({super.key});
@@ -17,9 +19,11 @@ class _OffenseLoggerState extends State<OffenseLogger> {
   @override
   void initState() {
     super.initState();
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
     final getit = GetIt.instance;
     getit.registerSingleton(OffenseCounter());
     offenseCounter = getit.get<OffenseCounter>();
+    Wakelock.enable();
   }
 
   @override
