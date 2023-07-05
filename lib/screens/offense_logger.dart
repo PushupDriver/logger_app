@@ -42,9 +42,6 @@ class _OffenseLoggerState extends State<OffenseLogger> {
               child: const Text("+1"),
               onPressed: () {
                 valueUpdater(damageValue + 1);
-                // setState(() {
-                //   damageValue += 1;
-                // });
               },
             ),
           ),
@@ -58,9 +55,6 @@ class _OffenseLoggerState extends State<OffenseLogger> {
               child: const Text("+10"),
               onPressed: () {
                 valueUpdater(damageValue + 10);
-                // setState(() {
-                //   damageValue += 10;
-                // });
               },
             ),
           ),
@@ -74,9 +68,6 @@ class _OffenseLoggerState extends State<OffenseLogger> {
               child: const Text("-1"),
               onPressed: () {
                 valueUpdater(damageValue - 1);
-                // setState(() {
-                //   damageValue -= 1;
-                // });
               },
             ),
           ),
@@ -90,9 +81,6 @@ class _OffenseLoggerState extends State<OffenseLogger> {
               child: const Text("-10"),
               onPressed: () {
                 valueUpdater(damageValue - 10);
-                // setState(() {
-                //   damageValue -= 10;
-                // });
               },
             ),
           )

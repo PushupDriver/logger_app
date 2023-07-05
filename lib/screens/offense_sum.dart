@@ -25,7 +25,7 @@ class _OffenseSumState extends State<OffenseSum> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Offense Sum"),
+        title: const Text("Sum"),
       ),
       body: ListView(
         children: [
