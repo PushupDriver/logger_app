@@ -3,9 +3,12 @@ import 'dart:math';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:confetti/confetti.dart';
 import 'package:exercise_counter/singletons/offense_counter.dart';
+import 'package:exercise_counter/socket/socket_server.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
+
+import '../blocs/blocs.dart';
 
 class PushUp extends StatefulWidget {
   const PushUp({super.key});
@@ -44,7 +47,9 @@ class _PushUpState extends State<PushUp> {
   @override
   void initState() {
     super.initState();
-    toPushUp = GetIt.instance.get<OffenseCounter>().sumPushup();
+    GetIt getit = GetIt.instance;
+    getit.registerSingleton<PushUpSocketServer>(PushUpSocketServer());
+    toPushUp = getit.get<OffenseCounter>().sumPushup();
     // Set landscape orientation
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeLeft,
@@ -58,6 +63,15 @@ class _PushUpState extends State<PushUp> {
     donePlayer.setVolume(1);
     pushupPlayer.setSource(AssetSource('sound_effects/pushup.opus'));
     donePlayer.setSource(AssetSource('sound_effects/done.opus'));
+    final blocs = getit.get<Blocs>();
+    blocs.presserBloc.stream.listen((event) {
+      pressed();
+    });
+    blocs.connectBloc.stream.listen((event) {
+      if (event == 1 && Navigator.of(context).canPop()) {
+        Navigator.of(context).pop();
+      }
+    });
   }
 
   @override
@@ -93,6 +107,15 @@ class _PushUpState extends State<PushUp> {
     return path;
   }
 
+  void pressed() {
+    setState(() {
+      toPushUp = toPushUp - 1;
+    });
+    focusNode.requestFocus();
+    pushupPlayer.seek(Duration.zero);
+    pushupPlayer.resume();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -111,12 +134,7 @@ class _PushUpState extends State<PushUp> {
                             .abs() >
                         500)) {
               debugPrint(event.logicalKey.debugName.toString());
-              setState(() {
-                toPushUp = toPushUp - 1;
-              });
-              focusNode.requestFocus();
-              pushupPlayer.seek(Duration.zero);
-              pushupPlayer.resume();
+              pressed();
             }
             lassPressDuration = event.timeStamp;
           }

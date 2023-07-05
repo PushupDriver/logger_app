@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:exercise_counter/blocs/blocs.dart';
 import 'package:exercise_counter/components/offense_button.dart';
 import 'package:exercise_counter/screens/offense_sum.dart';
 import 'package:exercise_counter/singletons/offense_counter.dart';
@@ -22,8 +25,9 @@ class _OffenseLoggerState extends State<OffenseLogger> {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
     final getit = GetIt.instance;
     getit.registerSingleton(OffenseCounter());
+    getit.registerSingleton(Blocs());
     offenseCounter = getit.get<OffenseCounter>();
-    Wakelock.enable();
+    if (Platform.isAndroid) Wakelock.enable();
   }
 
   Widget damageLogger(int damageValue, void Function(int value) valueUpdater,

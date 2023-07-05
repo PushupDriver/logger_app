@@ -1,4 +1,4 @@
-import 'package:exercise_counter/screens/pushup.dart';
+import 'package:exercise_counter/screens/wait_for_presser.dart';
 import 'package:exercise_counter/singletons/offense_counter.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -117,8 +117,8 @@ class _OffenseSumState extends State<OffenseSum> {
             child: MaterialButton(
               color: Colors.blue,
               onPressed: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => const PushUp()));
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const WaitForPresser()));
               },
               child: const Text("Next"),
             ),
