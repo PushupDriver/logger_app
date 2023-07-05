@@ -24,16 +24,51 @@ class OffenseCounter {
     }
   }
 
-  int get preCompensateCountSum => (wrongWayOffenseCount +
-      headlightUsageOffenseCount +
-      notRestingOffenseCount +
-      redLightOffenseCount +
-      collidingWithCarCount +
-      speedingCount +
-      failedToStopAtWeightStationCount +
-      illegalTrailerCount +
-      damagedVehicleCount +
-      carDamage);
+  int _trailerDamage = 0;
+  int get trailerDamage => _trailerDamage;
+  set trailerDamage(int value) {
+    _trailerDamage = value;
+    if (_trailerDamage > 100) {
+      _trailerDamage = 100;
+    } else if (_trailerDamage < 0) {
+      _trailerDamage = 0;
+    }
+  }
+
+  void repaire() {
+    if (carDamage != 0) {
+      carDamages.add(carDamage);
+    }
+    if (trailerDamage != 0) {
+      trailerDamages.add(trailerDamage);
+    }
+    carDamage = 0;
+    trailerDamage = 0;
+  }
+
+  List<int> carDamages = [];
+  List<int> trailerDamages = [];
+
+  int get carDamageSum =>
+      carDamages.fold(0, (previous, current) => previous + current) + carDamage;
+
+  int get trailerDamageSum =>
+      trailerDamages.fold(0, (previous, current) => previous + current) +
+      trailerDamage;
+
+  int get preCompensateCountSum {
+    return wrongWayOffenseCount +
+        headlightUsageOffenseCount +
+        notRestingOffenseCount +
+        redLightOffenseCount +
+        collidingWithCarCount +
+        speedingCount +
+        failedToStopAtWeightStationCount +
+        illegalTrailerCount +
+        damagedVehicleCount +
+        carDamageSum +
+        trailerDamageSum;
+  }
 
   int get compensation {
     if (preCompensateCountSum * perOffencePushup < compensationThreashold) {
