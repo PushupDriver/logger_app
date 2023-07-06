@@ -35,6 +35,8 @@ class OffenseCounter {
     }
   }
 
+  int finishedPushup = 0;
+
   void repaire() {
     if (carDamage != 0) {
       carDamages.add(carDamage);
@@ -77,7 +79,5 @@ class OffenseCounter {
     return 0;
   }
 
-  int sumPushup() {
-    return preCompensateCountSum * perOffencePushup + compensation;
-  }
+  int get sumPushup => preCompensateCountSum * perOffencePushup + compensation;
 }

@@ -21,7 +21,7 @@ class PushUpSocketServer {
     presserSocket?.socket = socket;
     // presserSocket = socket;
     presserSocket?.startListen();
-    GetIt.instance.get<Blocs>().connectBloc.add(0);
+    GetIt.instance.get<Blocs>().connectBloc.add(ConnectionState.active);
   }
 
   void onServerDone() async {

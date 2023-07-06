@@ -107,7 +107,7 @@ class _OffenseSumState extends State<OffenseSum> {
               style: TextStyle(fontSize: 30),
             ),
             trailing: Text(
-              offenseCounter.sumPushup().toString(),
+              offenseCounter.sumPushup.toString(),
               style: const TextStyle(fontSize: 30),
             ),
           ),

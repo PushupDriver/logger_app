@@ -3,9 +3,10 @@ import 'dart:math';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:confetti/confetti.dart';
 import 'package:exercise_counter/singletons/offense_counter.dart';
-import 'package:exercise_counter/socket/socket_server.dart';
+import 'package:exercise_counter/socket/presser_socket.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 import '../blocs/blocs.dart';
@@ -18,26 +19,7 @@ class PushUp extends StatefulWidget {
 }
 
 class _PushUpState extends State<PushUp> {
-  int _toPushUp = 0;
-  set toPushUp(int value) {
-    _toPushUp = value;
-    if (_toPushUp == 0) {
-      // Done!!
-      confettiController.play();
-      donePlayer.seek(Duration.zero);
-      donePlayer.resume();
-      Future.delayed(const Duration(seconds: 10))
-          .then((value) => confettiController.stop());
-    } else if (_toPushUp < 0) {
-      _toPushUp = 0;
-    }
-  }
-
-  int get toPushUp => _toPushUp;
-
-  // int toPushUp = 0;
-  Duration? lassPressDuration;
-  FocusNode focusNode = FocusNode();
+  GetIt getit = GetIt.instance;
 
   late ConfettiController confettiController;
 
@@ -47,9 +29,6 @@ class _PushUpState extends State<PushUp> {
   @override
   void initState() {
     super.initState();
-    GetIt getit = GetIt.instance;
-    getit.registerSingleton<PushUpSocketServer>(PushUpSocketServer());
-    toPushUp = getit.get<OffenseCounter>().sumPushup();
     // Set landscape orientation
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeLeft,
@@ -63,15 +42,6 @@ class _PushUpState extends State<PushUp> {
     donePlayer.setVolume(1);
     pushupPlayer.setSource(AssetSource('sound_effects/pushup.opus'));
     donePlayer.setSource(AssetSource('sound_effects/done.opus'));
-    final blocs = getit.get<Blocs>();
-    blocs.presserBloc.stream.listen((event) {
-      pressed();
-    });
-    blocs.connectBloc.stream.listen((event) {
-      if (event == 1 && Navigator.of(context).canPop()) {
-        Navigator.of(context).pop();
-      }
-    });
   }
 
   @override
@@ -79,6 +49,8 @@ class _PushUpState extends State<PushUp> {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
     confettiController.dispose();
+    pushupPlayer.dispose();
+    donePlayer.dispose();
     super.dispose();
   }
 
@@ -108,10 +80,25 @@ class _PushUpState extends State<PushUp> {
   }
 
   void pressed() {
-    setState(() {
-      toPushUp = toPushUp - 1;
-    });
-    focusNode.requestFocus();
+    setState(() {});
+    final toPushup = offenseCounter.sumPushup - offenseCounter.finishedPushup;
+    if (toPushup == 0) {
+      // Done!!
+      confettiController.play();
+      donePlayer.seek(Duration.zero);
+      donePlayer.resume();
+      Future.delayed(const Duration(seconds: 10))
+          .then((value) => confettiController.stop());
+    } else if (toPushup < 0) {
+      setState(() {
+        offenseCounter.finishedPushup = offenseCounter.sumPushup;
+      });
+      return;
+    }
+
+    // setState(() {
+    //   offenseCounter.finishedPushup += 1;
+    // });
     pushupPlayer.seek(Duration.zero);
     pushupPlayer.resume();
   }
@@ -122,28 +109,30 @@ class _PushUpState extends State<PushUp> {
       // appBar: AppBar(
       //   title: const Text("Push up!"),
       // ),
-      body: KeyboardListener(
-        autofocus: true,
-        focusNode: focusNode,
-        onKeyEvent: (event) {
-          if (event is KeyUpEvent) {
-            if (lassPressDuration == null ||
-                (lassPressDuration != null &&
-                    (event.timeStamp.inMicroseconds -
-                                lassPressDuration!.inMicroseconds)
-                            .abs() >
-                        500)) {
-              debugPrint(event.logicalKey.debugName.toString());
+      body: MultiBlocListener(
+        listeners: [
+          BlocListener(
+            bloc: getit.get<Blocs>().presserBloc,
+            listener: (context, state) {
               pressed();
-            }
-            lassPressDuration = event.timeStamp;
-          }
-        },
+            },
+          ),
+          BlocListener(
+            bloc: getit.get<Blocs>().connectBloc,
+            listener: (context, state) {
+              if (state == ConnectionState.done &&
+                  Navigator.of(context).canPop()) {
+                Navigator.of(context).pop();
+              }
+            },
+          )
+        ],
         child: Stack(
           children: [
             Center(
               child: Text(
-                toPushUp.toString(),
+                (offenseCounter.sumPushup - offenseCounter.finishedPushup)
+                    .toString(),
                 style: const TextStyle(
                   fontFamily: 'Rajdhiani',
                   fontSize: 350,

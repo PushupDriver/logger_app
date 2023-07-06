@@ -24,6 +24,8 @@ class _WaitForPresserState extends State<WaitForPresser> {
     return addresses;
   }
 
+  late PushUpSocketServer socketServer;
+
   @override
   void initState() {
     super.initState();
@@ -34,9 +36,13 @@ class _WaitForPresserState extends State<WaitForPresser> {
         Navigator.of(context)
             .push(MaterialPageRoute(builder: (context) => const PushUp()));
       }
-    } catch (e) {}
+    } catch (e) {
+      socketServer = PushUpSocketServer();
+      getit.registerSingleton(socketServer);
+      socketServer.bind();
+    }
     getit.get<Blocs>().connectBloc.stream.listen((event) {
-      if (event == 0) {
+      if (event == ConnectionState.active) {
         Navigator.of(context)
             .push(MaterialPageRoute(builder: (context) => const PushUp()));
       }

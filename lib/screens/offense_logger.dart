@@ -27,7 +27,7 @@ class _OffenseLoggerState extends State<OffenseLogger> {
     getit.registerSingleton(OffenseCounter());
     getit.registerSingleton(Blocs());
     offenseCounter = getit.get<OffenseCounter>();
-    if (Platform.isAndroid) Wakelock.enable();
+    if (Platform.isAndroid || Platform.isIOS) Wakelock.enable();
   }
 
   Widget damageLogger(int damageValue, void Function(int value) valueUpdater,
