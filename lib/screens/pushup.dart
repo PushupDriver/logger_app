@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:confetti/confetti.dart';
-import 'package:exercise_counter/singletons/offense_counter.dart';
 import 'package:exercise_counter/socket/presser_socket.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

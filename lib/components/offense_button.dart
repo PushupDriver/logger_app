@@ -23,34 +23,31 @@ class OffenseButton extends StatelessWidget {
     return MaterialButton(
       color: color,
       onPressed: onPressed,
-      child: Container(
-        padding: const EdgeInsets.all(5),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  icon,
-                  size: 45,
-                  color: contentColor,
-                ),
-                const SizedBox(
-                  width: 5,
-                ),
-                Text(
-                  count.toString(),
-                  style: TextStyle(fontSize: 40, color: contentColor),
-                ),
-              ],
-            ),
-            Text(
-              text,
-              style: TextStyle(color: contentColor),
-            )
-          ],
-        ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                icon,
+                size: 40,
+                color: contentColor,
+              ),
+              const SizedBox(
+                width: 5,
+              ),
+              Text(
+                count.toString(),
+                style: TextStyle(fontSize: 30, color: contentColor),
+              ),
+            ],
+          ),
+          Text(
+            text,
+            style: TextStyle(color: contentColor),
+          )
+        ],
       ),
     );
   }
