@@ -30,99 +30,100 @@ class _OffenseLoggerState extends State<OffenseLogger> {
     if (Platform.isAndroid || Platform.isIOS) Wakelock.enable();
   }
 
-  Widget damageLogger(int damageValue, void Function(int value) valueUpdater,
-      String text, List<int> valueList,
-      {bool buttonFirst = false}) {
-    const double buttonSpace = 10;
-    final Widget buttons = SizedBox(
-      height: 150,
-      width: 60,
-      child: Column(
-        children: [
-          Expanded(
-            flex: 1,
-            child: MaterialButton(
-              color: Colors.blue,
-              child: const Text("+1"),
-              onPressed: () {
-                valueUpdater(damageValue + 1);
-              },
-            ),
+  Widget numberButtonText(String text) {
+    const TextStyle numberStyle = TextStyle(fontSize: 10);
+    return Text(text, style: numberStyle);
+  }
+
+  Widget damageLogger(
+    int damageValue,
+    void Function(int value) valueUpdater,
+    String text,
+    List<int> valueList,
+  ) {
+    const double buttonSpace = 2;
+    final Widget buttons = Row(
+      children: [
+        Expanded(
+          flex: 1,
+          child: MaterialButton(
+            color: Colors.blue,
+            child: numberButtonText("+\n1"),
+            onPressed: () {
+              valueUpdater(damageValue + 1);
+            },
           ),
-          const SizedBox(
-            height: buttonSpace,
+        ),
+        const SizedBox(
+          width: buttonSpace,
+        ),
+        Expanded(
+          flex: 1,
+          child: MaterialButton(
+            color: Colors.blue,
+            child: numberButtonText("+\n10"),
+            onPressed: () {
+              valueUpdater(damageValue + 10);
+            },
           ),
-          Expanded(
-            flex: 1,
-            child: MaterialButton(
-              color: Colors.blue,
-              child: const Text("+10"),
-              onPressed: () {
-                valueUpdater(damageValue + 10);
-              },
-            ),
+        ),
+        const SizedBox(
+          width: buttonSpace,
+        ),
+        Expanded(
+          flex: 1,
+          child: MaterialButton(
+            color: Colors.red,
+            child: numberButtonText("-\n1"),
+            onPressed: () {
+              valueUpdater(damageValue - 1);
+            },
           ),
-          const SizedBox(
-            height: buttonSpace,
+        ),
+        const SizedBox(
+          width: buttonSpace,
+        ),
+        Expanded(
+          flex: 1,
+          child: MaterialButton(
+            color: Colors.red,
+            child: numberButtonText("-\n10"),
+            onPressed: () {
+              valueUpdater(damageValue - 10);
+            },
           ),
-          Expanded(
-            flex: 1,
-            child: MaterialButton(
-              color: Colors.blue,
-              child: const Text("-1"),
-              onPressed: () {
-                valueUpdater(damageValue - 1);
-              },
-            ),
-          ),
-          const SizedBox(
-            height: buttonSpace,
-          ),
-          Expanded(
-            flex: 1,
-            child: MaterialButton(
-              color: Colors.blue,
-              child: const Text("-10"),
-              onPressed: () {
-                valueUpdater(damageValue - 10);
-              },
-            ),
-          )
-        ],
-      ),
+        )
+      ],
     );
 
-    Widget labels = Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    Widget labels = Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        Container(
-          height: 50,
-          width: 90,
-          decoration: BoxDecoration(
-              border: Border.all(
-            color: Colors.white,
-            width: 1,
-          )),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: valueList.map((e) => Text(e.toString())).toList(),
-          ),
+        valueList.isNotEmpty
+            ? Container(
+                height: 50,
+                width: 90,
+                decoration: BoxDecoration(
+                    border: Border.all(
+                  color: Colors.white,
+                  width: 1,
+                )),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: valueList.map((e) => Text(e.toString())).toList(),
+                ),
+              )
+            : null,
+        Column(
+          children: [
+            Text(
+              "$damageValue%",
+              style: const TextStyle(fontSize: 30),
+            ),
+            Text(text),
+          ],
         ),
-        Text(
-          "$damageValue%",
-          style: const TextStyle(fontSize: 30),
-        ),
-        Text(text),
-        MaterialButton(
-          color: Colors.blue,
-          onPressed: () {
-            setState(() {
-              offenseCounter.repaire();
-            });
-          },
-          child: const Text("Repair"),
-        ),
-      ],
+      ].where((element) => element != null).cast<Widget>().toList(),
     );
 
     return Expanded(
@@ -131,18 +132,8 @@ class _OffenseLoggerState extends State<OffenseLogger> {
           padding: const EdgeInsets.all(5),
           child: Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: buttonFirst
-                    ? [
-                        buttons,
-                        labels,
-                      ]
-                    : [
-                        labels,
-                        buttons,
-                      ],
-              ),
+              labels,
+              buttons,
             ],
           ),
         ),
@@ -178,7 +169,7 @@ class _OffenseLoggerState extends State<OffenseLogger> {
                 setState(() {
                   offenseCounter.carDamage = value;
                 });
-              }, "Car", offenseCounter.carDamages, buttonFirst: true),
+              }, "Car", offenseCounter.carDamages),
               damageLogger(offenseCounter.trailerDamage, (value) {
                 setState(() {
                   offenseCounter.trailerDamage = value;
@@ -334,6 +325,31 @@ class _OffenseLoggerState extends State<OffenseLogger> {
             padding: const EdgeInsets.all(5),
             child: Row(
               children: [
+                Expanded(
+                  child: Column(
+                    children: [
+                      MaterialButton(
+                        color: Colors.blue,
+                        onPressed: () {
+                          setState(() {
+                            offenseCounter.repair();
+                          });
+                        },
+                        child: const Text("Repair"),
+                      ),
+                      MaterialButton(
+                        color: Colors.blue,
+                        onPressed: () {
+                          setState(() {
+                            offenseCounter.repair();
+                          });
+                        },
+                        child: Text(
+                            "Call service ${offenseCounter.serviceCalled}"),
+                      ),
+                    ],
+                  ),
+                ),
                 Expanded(
                   child: OffenseButton(
                     count: offenseCounter.damagedVehicleCount,

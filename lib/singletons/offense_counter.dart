@@ -1,5 +1,6 @@
 const int compensationThreashold = 100;
 const int perOffencePushup = 10;
+const int perDamagePushup = 10;
 
 class OffenseCounter {
   int wrongWayOffenseCount = 0;
@@ -37,7 +38,7 @@ class OffenseCounter {
 
   int finishedPushup = 0;
 
-  void repaire() {
+  void repair() {
     if (carDamage != 0) {
       carDamages.add(carDamage);
     }
@@ -46,6 +47,11 @@ class OffenseCounter {
     }
     carDamage = 0;
     trailerDamage = 0;
+  }
+
+  int serviceCalled = 0;
+  void callService() {
+    serviceCalled += 1;
   }
 
   List<int> carDamages = [];
@@ -67,17 +73,21 @@ class OffenseCounter {
         speedingCount +
         failedToStopAtWeightStationCount +
         illegalTrailerCount +
-        damagedVehicleCount +
-        carDamageSum +
-        trailerDamageSum;
+        damagedVehicleCount;
   }
 
   int get compensation {
-    if (preCompensateCountSum * perOffencePushup < compensationThreashold) {
+    if (preCompensateCountSum * perOffencePushup +
+            (carDamageSum + trailerDamageSum) * perDamagePushup <
+        compensationThreashold) {
       return compensationThreashold;
     }
     return 0;
   }
 
-  int get sumPushup => preCompensateCountSum * perOffencePushup + compensation;
+  int get sumPushup =>
+      preCompensateCountSum +
+      (carDamageSum + trailerDamageSum) * perDamagePushup +
+      compensation +
+      serviceCalled * 50;
 }

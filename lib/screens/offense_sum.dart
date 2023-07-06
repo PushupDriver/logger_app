@@ -86,13 +86,18 @@ class _OffenseSumState extends State<OffenseSum> {
           ListTile(
             title: const Text("Car damage"),
             trailing: Text(
-                "${offenseCounter.carDamageSum}% x 100 x $perOffencePushup"),
+                "${offenseCounter.carDamageSum}% x 100 x $perDamagePushup"),
           ),
           const Divider(),
           ListTile(
             title: const Text("Trailer damage"),
             trailing: Text(
-                "${offenseCounter.trailerDamageSum}% x 100 x $perOffencePushup"),
+                "${offenseCounter.trailerDamageSum}% x 100 x $perDamagePushup"),
+          ),
+          const Divider(),
+          ListTile(
+            title: const Text("Service called"),
+            trailing: Text("${offenseCounter.serviceCalled} x 50"),
           ),
           const Divider(),
           ListTile(
