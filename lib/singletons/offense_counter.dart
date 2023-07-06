@@ -86,7 +86,7 @@ class OffenseCounter {
   }
 
   int get sumPushup =>
-      preCompensateCountSum +
+      preCompensateCountSum * perOffencePushup +
       (carDamageSum + trailerDamageSum) * perDamagePushup +
       compensation +
       serviceCalled * 50;
