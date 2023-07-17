@@ -341,7 +341,7 @@ class _OffenseLoggerState extends State<OffenseLogger> {
                         color: Colors.blue,
                         onPressed: () {
                           setState(() {
-                            offenseCounter.repair();
+                            offenseCounter.callService();
                           });
                         },
                         child: Text(
