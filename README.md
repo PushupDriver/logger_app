@@ -1,9 +1,9 @@
 # exercise_counter
 
 ## Rules:
-Per offenses: 10 pushups
-Per damage( car or tariler): 10 pushups
-if sum of pushups was below 100, add 100 pushups as compensation
+Per offenses: 10 pushups  
+Per damage( car or tariler): 10 pushups  
+if sum of pushups was below 100, add 100 pushups as compensation  
 
 Example:
 1. 1 speeding + 1 red light  ( + 100 compensation ) = 120
