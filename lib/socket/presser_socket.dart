@@ -13,6 +13,8 @@ class PresserSocket {
   Socket? socket;
   StreamSubscription? socketSub;
 
+  DateTime lastPressTime = DateTime.now();
+
   void onError(e) {}
 
   void onDone() {
@@ -30,8 +32,14 @@ class PresserSocket {
         // socket!.write(remainPushups.toString());
         // socket!.flush();
       } else if (incoming == "Pressed!") {
-        offenseCounter.finishedPushup += 1;
-        presserBloc.add(DateTime.now().millisecondsSinceEpoch);
+        // lastPressTime = DateTime.now();
+        final betweenPressDuration = DateTime.now().difference(lastPressTime);
+        debugPrint(betweenPressDuration.inSeconds.toString());
+        if (betweenPressDuration.inSeconds > 1) {
+          offenseCounter.finishedPushup += 1;
+          presserBloc.add(DateTime.now().millisecondsSinceEpoch);
+        }
+        lastPressTime = DateTime.now();
       }
       final remainPushups =
           offenseCounter.sumPushup - offenseCounter.finishedPushup;
