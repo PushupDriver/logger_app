@@ -34,8 +34,8 @@ class PresserSocket {
       } else if (incoming == "Pressed!") {
         // lastPressTime = DateTime.now();
         final betweenPressDuration = DateTime.now().difference(lastPressTime);
-        debugPrint(betweenPressDuration.inSeconds.toString());
-        if (betweenPressDuration.inSeconds > 1) {
+        // debugPrint(betweenPressDuration.inSeconds.toString());
+        if (betweenPressDuration.inMilliseconds > 500) {
           offenseCounter.finishedPushup += 1;
           presserBloc.add(DateTime.now().millisecondsSinceEpoch);
         }
